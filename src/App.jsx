@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React,  useEffect } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -7,9 +7,10 @@ import { Route, Routes } from 'react-router-dom';
 import Details from "./Details";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
+import cartReducer from "./cartReducer";
 
 export default function App() {
-  const [cart, setCart] = useState(() => {
+  const [cart, setCart] = useReducer(() => {
     try {
       return JSON.parse(localStorage.getItem('cart')) ?? [];// this will run once on first render
     } catch {
@@ -23,29 +24,15 @@ export default function App() {
   }, [cart])
 
   function addToCart(id, sku) {
-    setCart((items) => {
-      const itemInCart = items.find((i) => i.sku === sku);
-      if (itemInCart) {
-        // Return a new array with matching item replaced
-        console.log(itemInCart, '--itemInCart')
-        return items.map((i) =>
-          i.sku === sku ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      } else {
-        return [...items, { id: id, sku: sku, quantity: 1 }]
-      }
-    })
+
   }
 
   function updateQuantity(sku, quantity) {
-    setCart((items) => {
-      return quantity === 0 ? items.filter(item => item.sku !== sku)
-        : items.map(item => (item.sku === sku ? { ...item, quantity: quantity } : item));
-    })
+
   }
 
   function emptyCart() {
-    setCart([]);
+
   }
 
   return (
