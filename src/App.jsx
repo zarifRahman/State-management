@@ -3,6 +3,7 @@ import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import { getProducts } from "./services/productService";
+import Spinner from "./Spinner";
 
 const products = [
   {
@@ -48,11 +49,13 @@ export default function App() {
   const [size, setSize] = useState("");
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getProducts("shoes")
     .then((response) => setProducts(response))
     .catch((error) => setError(error))
+    .finally(() => setLoading(false));
   },[]);
 
   function renderProduct(p) {
@@ -71,7 +74,9 @@ export default function App() {
     : products;
 
   // throw error before rendering jsx
-  if(error) throw error;  
+  if(error) throw error;
+
+  if(loading) return <Spinner />
 
   return (
     <>
