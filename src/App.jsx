@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
+import { getProducts } from "./services/productService";
 
 const products = [
   {
@@ -45,6 +46,14 @@ const products = [
 
 export default function App() {
   const [size, setSize] = useState("");
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getProducts("shoes")
+    .then((response) => setProducts(response))
+    .catch((error) => setError(error))
+  },[]);
 
   function renderProduct(p) {
     return (
@@ -60,6 +69,9 @@ export default function App() {
   const filteredProduct = size 
     ? products.filter((product) => product.skus.find(skus => skus.size === parseInt(size))) 
     : products;
+
+  // throw error before rendering jsx
+  if(error) throw error;  
 
   return (
     <>
@@ -80,6 +92,9 @@ export default function App() {
               <option value="9">9</option>
             </select>
           </section>
+          {/* if size is true then render " " is false */}
+          {size && <h2>Found {filteredProduct.length} items</h2>}
+
           {/* product section */}
           <h1>All Products</h1>
           <section id="products">
