@@ -77,7 +77,7 @@ export default function App() {
             </select>
           </section>
           {/* product section */}
-          <h1>All Product</h1>
+          <h1>All Products</h1>
           <section id="products">
             {/* map automatically passes each product to the renderProduct function */}
             {/* it is called "point free style" */}
