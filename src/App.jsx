@@ -57,6 +57,10 @@ export default function App() {
       </div>
     );
   }
+  const filteredProduct = size 
+    ? products.filter((product) => product.skus.find(skus => skus.size === parseInt(size))) 
+    : products;
+
   return (
     <>
       <div className="content">
@@ -81,7 +85,7 @@ export default function App() {
           <section id="products">
             {/* map automatically passes each product to the renderProduct function */}
             {/* it is called "point free style" */}
-            {products.map(renderProduct)}
+            {filteredProduct.map(renderProduct)}
           </section>
         </main>
       </div>
