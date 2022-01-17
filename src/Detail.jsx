@@ -9,9 +9,11 @@ export default function Detail() {
   const {id} = useParams();
   const { data:product,loading,error } = useFetch("products/" + id);
 
-  if(error) throw error;
+  // state tricks return early
   if(loading) return <Spinner />
-  if(product.length === 0) return <PageNotFound />
+  // if there is no product with an id show 404 page
+  if(!product) return <PageNotFound />
+  if(error) throw error;
 
   return (
     <div id="detail">
