@@ -7,6 +7,7 @@ import {useState,useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Detail from "./Detail";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
             {/* Product route */}
             <Route path="/:category/:id" element={<Detail addToCart={addToCart} />} />
             <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
+            <Route path="/checkout" element={<Checkout cart={cart} />} />
           </Routes>
         </main>
       </div>
