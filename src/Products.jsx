@@ -51,7 +51,7 @@ export default function Products() {
       {/* product section */}
       <h1>All Products</h1>
       <section id="products">
-        {/* map automatically passes each product to the renderProduct function */}
+        {/* map automatically passes meach product to the renderProduct function */}
         {/* it is called "point free style" */}
         {filteredProduct.map(renderProduct)}
       </section>
