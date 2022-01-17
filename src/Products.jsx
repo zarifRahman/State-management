@@ -37,16 +37,7 @@ export default function Products() {
       {/* filter section */}
       <section id="filters">
         <label htmlFor="size">Filter by Size:</label>{" "}
-        <select 
-          id="size" 
-          value={size} 
-          onChange={e => setSize(e.target.value)}
-        >
-          <option value="">All sizes</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-        </select>
+        
       </section>
       {/* if size is true then render " " is false */}
       {size && <h2>Found {filteredProduct.length} items</h2>}
