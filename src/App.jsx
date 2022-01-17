@@ -30,9 +30,12 @@ export default function App() {
       }
     })
   }
-  useEffect(() => {
-    // addToCart();
-  }, [])
+  function updateQuantity(sku, quantity) {
+    // update the cart[]
+    setCart((items) => {
+      return items.map((item) => item.sku === sku ? {...item, quantity: quantity} : item)
+    })
+  }
   return (
     <>
       <div className="content">
@@ -43,7 +46,7 @@ export default function App() {
             <Route path="/:category" element={<Products/>} /> 
             {/* Product route */}
             <Route path="/:category/:id" element={<Detail addToCart={addToCart} />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
           </Routes>
         </main>
       </div>

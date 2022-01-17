@@ -5,7 +5,7 @@ import useFetch from './services/useFetch';
 import Spinner from './Spinner';
 
 
-export default function Detail({addToCart}) {
+export default function Detail({ addToCart }) {
   const {id} = useParams();
   const navigate = useNavigate();
 
