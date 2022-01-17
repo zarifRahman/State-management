@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PageNotFound from './PageNotFound';
 import useFetch from './services/useFetch';
 import Spinner from './Spinner';
@@ -7,6 +7,8 @@ import Spinner from './Spinner';
 
 export default function Detail() {
   const {id} = useParams();
+  const navigate = useNavigate();
+
   const { data:product,loading,error } = useFetch("products/" + id);
 
   // state tricks return early
@@ -19,6 +21,9 @@ export default function Detail() {
     <div id="detail">
       <h1>{product?.name}</h1>
       <p>${product?.price}</p>
+      <p>
+        <button class="btn btn-primary" onClick={()=> navigate('/cart')}>Add Cart</button>
+      </p>
       <img src={`/images/${product?.image}`} alt={product?.name} />
     </div>
   )
