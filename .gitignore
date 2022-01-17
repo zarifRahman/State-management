@@ -4,14 +4,9 @@
 node_modules
 /.pnp
 
-# testing
-/coverage
-
-
-/out/
 
 # production
-/build
+# /build
 
 # misc
 .env
