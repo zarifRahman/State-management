@@ -19,6 +19,7 @@ export default function Checkout({ cart,emtyCart }) {
   const [address, setAddress] = useState(emptyAddress);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState(null);
+  const [touched,setTouched] = useState({})
 
   // Derived state
   const errors = getErrors(address);
@@ -35,7 +36,12 @@ export default function Checkout({ cart,emtyCart }) {
   }
 
   function handleBlur(event) {
-    // TODO
+    setTouched((curr) => {
+      return {
+        ...curr,
+        [event.target.id]: true
+      };
+    });
   }
 
   async function handleSubmit(event) {
@@ -95,6 +101,7 @@ export default function Checkout({ cart,emtyCart }) {
             onBlur={handleBlur}
             onChange={handleChange}
           />
+          <p role="alert">{(touched.city || status === STATUS.SUBMITTED) && errors.city}</p>
         </div>
 
         <div>
@@ -112,6 +119,7 @@ export default function Checkout({ cart,emtyCart }) {
             <option value="United Kingdom">United Kingdom</option>
             <option value="USA">USA</option>
           </select>
+          <p role="alert">{(touched.country || status === STATUS.SUBMITTED) && errors.country}</p>
         </div>
 
         <div>
