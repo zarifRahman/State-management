@@ -20,6 +20,10 @@ export default function Checkout({ cart,emtyCart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState(null);
 
+  // Derived state
+  const errors = getErrors(address);
+  const isValid = Object.keys(errors).length === 0;
+
   function handleChange(e) {
     e.persist(); // to clear garbage collect// not necessary in react >17
     setAddress((currAddress) => {
@@ -37,14 +41,26 @@ export default function Checkout({ cart,emtyCart }) {
   async function handleSubmit(event) {
     event.preventDefault();
     setStatus(STATUS.SUBMITTING);
-    // saving the form data
-    try {
-      await saveShippingAddress(address);
-      emtyCart();
-      setStatus(STATUS.COMPLETED);
-    } catch (err) {
-      setSaveError(err);
+    if(isValid) {
+      // saving the form data
+      try {
+        await saveShippingAddress(address);
+        emtyCart();
+        setStatus(STATUS.COMPLETED);
+      } catch (err) {
+        setSaveError(err);
+      }
+    }else{
+      setStatus(STATUS.SUBMITTED);
     }
+  }
+
+  // Form validation
+  function getErrors(address) {
+    const result = {};
+    if(!address.city) result.city = "City is required";
+    if(!address.country) result.country = "Country is required";
+    return result;
   }
 
   // error is handled early before jsx
@@ -57,6 +73,17 @@ export default function Checkout({ cart,emtyCart }) {
   return (
     <>
       <h1>Shipping Info</h1>
+      {/* If the form is invalid and submitted, then dislay he errors */}
+      {!isValid && status === STATUS.SUBMITTED && (
+        <div role="alert">
+          <p>Please fix the following error</p>
+          <ul>
+            {Object.keys(errors).map((key) => {
+              return <li key={key}>{errors[key]}</li>
+            })}
+          </ul>
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="city">City</label>
