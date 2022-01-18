@@ -36,6 +36,7 @@ export default function Checkout({ cart,emtyCart }) {
   }
 
   function handleBlur(event) {
+    event.persist();
     setTouched((curr) => {
       return {
         ...curr,
