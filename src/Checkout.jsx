@@ -1,4 +1,13 @@
 import React, { useState } from "react";
+import { saveShippingAddress } from "./services/shippingService";
+
+//ENUM state
+const STATUS = {
+  IDLE: "IDLE",
+  SUBMITTED: "SUBMITTED",
+  SUBMITTING: "SUBMITTING",
+  COMPLETED: "COMPLETED",
+}
 
 // Declaring outside component to avoid recreation on each render
 const emptyAddress = {
@@ -8,6 +17,8 @@ const emptyAddress = {
 
 export default function Checkout({ cart }) {
   const [address, setAddress] = useState(emptyAddress);
+  const [status, setStatus] = useState(STATUS.IDLE);
+  const [saveError, setSaveError] = useState(null);
 
   function handleChange(e) {
     e.persist(); // to clear garbage collect// not necessary in react >17
@@ -24,9 +35,20 @@ export default function Checkout({ cart }) {
   }
 
   async function handleSubmit(event) {
-    // TODO
+    event.preventDefault();
+    setStatus(STATUS.SUBMITTING);
+    // saving the form data
+    try {
+      await saveShippingAddress(address);
+    } catch (err) {
+      setSaveError(err);
+    }
   }
 
+  // error is handled early before jsx
+  if(saveError) {
+    throw saveError;
+  }
   return (
     <>
       <h1>Shipping Info</h1>
@@ -65,6 +87,7 @@ export default function Checkout({ cart }) {
             type="submit"
             className="btn btn-primary"
             value="Save Shipping Info"
+            disabled={status === STATUS.SUBMITTING} // cannot double click
           />
         </div>
       </form>

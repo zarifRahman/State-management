@@ -48,7 +48,7 @@ export default function App() {
             {/* Product route */}
             <Route path="/:category/:id" element={<Detail addToCart={addToCart} />} />
             <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
-            <Route path="/checkout" element={<Checkout cart={cart} />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </main>
       </div>
