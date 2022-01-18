@@ -15,7 +15,7 @@ const emptyAddress = {
   country: "",
 };
 
-export default function Checkout({ cart }) {
+export default function Checkout({ cart,emtyCart }) {
   const [address, setAddress] = useState(emptyAddress);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState(null);
@@ -40,6 +40,8 @@ export default function Checkout({ cart }) {
     // saving the form data
     try {
       await saveShippingAddress(address);
+      emtyCart();
+      setStatus(STATUS.COMPLETED);
     } catch (err) {
       setSaveError(err);
     }
@@ -48,6 +50,9 @@ export default function Checkout({ cart }) {
   // error is handled early before jsx
   if(saveError) {
     throw saveError;
+  }
+  if(status === STATUS.COMPLETED){
+    return <h1>Thanks for Shopping</h1>
   }
   return (
     <>

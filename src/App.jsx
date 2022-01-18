@@ -37,6 +37,9 @@ export default function App() {
       return items.map((item) => item.sku === sku ? {...item, quantity: quantity} : item)
     })
   }
+  function emtyCart(){
+    setCart([]);
+  }
   return (
     <>
       <div className="content">
@@ -48,7 +51,7 @@ export default function App() {
             {/* Product route */}
             <Route path="/:category/:id" element={<Detail addToCart={addToCart} />} />
             <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout" element={<Checkout emtyCart={emtyCart} />} />
           </Routes>
         </main>
       </div>
