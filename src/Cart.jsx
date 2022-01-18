@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function Cart({ cart, updateQuantity }) {
   const navigate = useNavigate();
   // create an array of urls and pass that to fecthAll
+  // every time the card renders this url is created
+  // we solve this by storing previos values
   const urls = cart.map((i) => `products/${i.id}`);
   const { data: products, loading, error } = useFetchAll(urls);
 
