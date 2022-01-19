@@ -26,6 +26,11 @@ export default function cartReducer(cartState, action) {
         // add new cart array of object
         return [...cartState, { id: id, sku: sku, quantity: 1 }]
       }
+    case "update":
+      const { quantity, sku:skus } = action;
+      return quantity === 0 
+        ? cartState.filter((item) => item.sku === skus) 
+        : cartState.map((item) => item.sku === skus ? {...item, quantity: quantity} : item)
     default:
       throw new Error("Unhandled Action: " + action.type);
   }

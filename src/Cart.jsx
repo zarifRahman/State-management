@@ -51,11 +51,11 @@ export default function Cart({ cart, updateQuantity }) {
   return (
     <section id="cart">
       <h1>Cart</h1>
-      {/* <ul>{cart.map(renderItem)}</ul> */}
+      <ul>{cart.map(renderItem)}</ul>
       
       {
         // derived state cart.length
-        // cart.length > 0 && 
+        cart.length > 0 && 
         <button 
           class="btn btn-primary" 
           onClick={() => navigate('/checkout')}
