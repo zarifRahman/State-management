@@ -15,7 +15,7 @@ const emptyAddress = {
   country: "",
 };
 
-export default function Checkout({ cart,emtyCart }) {
+export default function Checkout({ dispatch }) {
   const [address, setAddress] = useState(emptyAddress);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState(null);
@@ -52,7 +52,8 @@ export default function Checkout({ cart,emtyCart }) {
       // saving the form data
       try {
         await saveShippingAddress(address);
-        emtyCart();
+        // emtyCart();
+        dispatch({action: "emptyCart"})
         setStatus(STATUS.COMPLETED);
       } catch (err) {
         setSaveError(err);

@@ -3,7 +3,7 @@ import useFetchAll from "./services/useFetchAll";
 import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
 
-export default function Cart({ cart, updateQuantity }) {
+export default function Cart({ cart, dispatch }) {
   const navigate = useNavigate();
   // create an array of urls and pass that to fecthAll
   // every time the card renders this url is created
@@ -29,8 +29,12 @@ export default function Cart({ cart, updateQuantity }) {
           <p>
             <select
               aria-label={`Select quantity for ${name} size ${size}`}
-              onChange={(e) => updateQuantity(sku, parseInt(e.target.value))}
-              value={quantity}
+              onChange={(e) => dispatch({
+                action: "update",
+                sku, 
+                quantity: parseInt(e.target.value)
+              })}
+                value={quantity}
             >
               <option value="0">Remove</option>
               <option value="1">1</option>
@@ -51,11 +55,11 @@ export default function Cart({ cart, updateQuantity }) {
   return (
     <section id="cart">
       <h1>Cart</h1>
-      <ul>{cart.map(renderItem)}</ul>
+      {/* <ul>{cart.map(renderItem)}</ul> */}
       
       {
         // derived state cart.length
-        cart.length > 0 && 
+        // cart.length > 0 && 
         <button 
           class="btn btn-primary" 
           onClick={() => navigate('/checkout')}

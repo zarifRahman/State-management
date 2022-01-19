@@ -5,7 +5,7 @@ import useFetch from './services/useFetch';
 import Spinner from './Spinner';
 
 
-export default function Detail({ addToCart }) {
+export default function Detail({ dispatch }) {
   const {id} = useParams();
   const navigate = useNavigate();
 
@@ -40,7 +40,8 @@ export default function Detail({ addToCart }) {
           disabled={!sku} 
           class="btn btn-primary" 
           onClick={()=> { 
-            addToCart(id, sku);
+            // we have  to pass an object inside dispatch
+            dispatch({ type:"add", id, sku:sku });
             navigate('/cart')
           }}
         >Add Cart</button>
