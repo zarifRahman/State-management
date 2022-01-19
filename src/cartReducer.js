@@ -11,6 +11,22 @@ export default function cartReducer(cartState, action) {
   switch (action.type) {
     case "emptyCart":
       return [];
-
+    case "add":
+      // along with type, action can have many properties
+      const { id, sku } = action;
+      // chaeck if cart[] has sku id in it
+      const itemInCart = cartState.find((i) => i.sku === sku);
+      if(itemInCart) {
+        // Return a new array with matching items.
+        // item already in the cart
+        return cartState.map((item) => item.sku === sku ? {...item, quantity: item.quantity + 1} : item);
+      } else {
+        // if it is not in the item in the cart
+        // Return new array with the new item
+        // add new cart array of object
+        return [...cartState, { id: id, sku: sku, quantity: 1 }]
+      }
+    default:
+      throw new Error("Unhandled Action: " + action.type);
   }
 }
