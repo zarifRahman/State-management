@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import useFetchAll from "./services/useFetchAll";
 import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
+import {CartContext} from './cartContext';
 
-export default function Cart({ cart, dispatch }) {
+export default function Cart() {
+  // consume context using useContext
+  const { cartState, dispatch } = useContext(CartContext);
   const navigate = useNavigate();
   // create an array of urls and pass that to fecthAll
   // every time the card renders this url is created
   // we solve this by storing previos values
-  const urls = cart.map((i) => `products/${i.id}`);
+  const urls = cartState?.map((i) => `products/${i.id}`);
   const { data: products, loading, error } = useFetchAll(urls);
 
   function renderItem(itemInCart) {
     const { id, sku, quantity } = itemInCart;
-    const {  name, image, skus } = products.find(
+    const {  name, image, skus } = products?.find(
       (p) => p.id === parseInt(id)
     );
     const { size } = skus.find((s) => s.sku === sku);
@@ -55,11 +58,11 @@ export default function Cart({ cart, dispatch }) {
   return (
     <section id="cart">
       <h1>Cart</h1>
-      {/* <ul>{cart.map(renderItem)}</ul> */}
+      <ul>{cartState.map(renderItem)}</ul>
       
       {
         // derived state cart.length
-        // cart.length > 0 && 
+        cartState?.length > 0 && 
         <button 
           class="btn btn-primary" 
           onClick={() => navigate('/checkout')}
