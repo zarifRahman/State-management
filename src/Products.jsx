@@ -37,18 +37,24 @@ export default function Products() {
       {/* filter section */}
       <section id="filters">
         <label htmlFor="size">Filter by Size:</label>{" "}
-        
+        <select
+          id="size"
+          value={size}
+          onChange={(e) => setSize(e.target.value)}
+        >
+          <option value="">All sizes</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+        {size && <h2>Found {filteredProduct.length} items</h2>}
       </section>
       {/* if size is true then render " " is false */}
-      {size && <h2>Found {filteredProduct.length} items</h2>}
-
       {/* product section */}
       <h1>All Products</h1>
-      <section id="products">
         {/* map automatically passes each product to the renderProduct function */}
         {/* it is called "point free style" */}
-        {filteredProduct.map(renderProduct)}
-      </section>
+      <section id="products">{filteredProduct.map(renderProduct)}</section>
     </>
   );
 }

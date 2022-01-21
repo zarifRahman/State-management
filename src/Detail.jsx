@@ -11,7 +11,7 @@ export default function Detail({ dispatch }) {
 
   const [sku, setSku] = useState("")
 
-  const { data:product,loading,error } = useFetch("products/" + id);
+  const { data:product,loading,error } = useFetch(`products/${id}`);
 
   // state tricks return early
   if(loading) return <Spinner />
@@ -46,7 +46,7 @@ export default function Detail({ dispatch }) {
           }}
         >Add Cart</button>
       </p>
-      <img src={`/images/${product?.image}`} alt={product?.name} />
+      <img src={`/images/${product?.image}`} alt={product?.category} />
     </div>
   )
 }
